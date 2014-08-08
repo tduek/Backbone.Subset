@@ -14,7 +14,7 @@ You may have the same car in both `Collection`s, but as different `Model` instan
 
 Backbone.Subset fixes this by creating subsets of one parent collection. The parent collection holds all of the models, and the subset has a subset of that collection. The `Model`s are the same instances in your parent collection and all its subsets, eliminating the possibility of ever being out of sync.
 
-## Usage
+## Getting Started
 
 Backbone.Subset behaves just like a regular collection. You won't notice any difference until you start doing more advanced customization.
 
@@ -32,22 +32,47 @@ var subsetClass = Backbone.Subset.extend({})
 // Instantiate them
 var parentCollection = new parentCollectionClass();
 var subset = new subsetClass([], { parentCollection: parentCollection });
-
-
-// Add some models to the subset
-var newModel = new Backbone.Model({ id: 1 })
-var newModels = [newModel, { id: 2 }];
-
-subset.add(newModels);
-
-subset.models // => Array(2 instances of modelClass)
-parentCollection.models // => Array(2 instances of modelClass)
 ```
 
 The only difference with a regular `Backbone.Collection` is that when you
 instantiate the `Subset`, you have to give it an instance of
 `Backbone.Collection` as the `parentCollection` in the options object.
 
+
+## Add Some Models
+
+Simple, just like a regular Collection:
+
+```javascript
+var newModel = new Backbone.Model({ id: 1 })
+var newModels = [newModel, { id: 2 }];
+
+subset.add(newModels);
+
+subset.models // => 2 instances of modelClass, ids: [1, 2]
+parentCollection.models // => 2 instances of modelClass, ids: [1, 2]
+```
+
+#### Only ever have one Model instance of a resource:
+
+```javascript
+subset.models // => 2 instances of modelClass, ids: [1, 2]
+
+// Another Subset
+var otherSubset = new subsetClass([], { parentCollection: parentCollection });
+
+// Add a model into otherSubset
+otherSubset.add({ id: 3 });
+
+
+otherSubset.models //=> 1 instance of modelClass, id: 3
+
+// Automatically added to parentCollection
+parentCollection.models // => 3 instances of modelClass, ids: [1, 2, 3]
+
+// Not in the origin subset
+subset.models //=> 2 instances of modelClass, ids: [1, 2]
+```
 
 ## TODO
 
