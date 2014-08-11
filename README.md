@@ -1,6 +1,8 @@
 # Backbone.Subset
 
-Hi! This is an extension for Backbone that gives you a new class, Backbone.Subset. It allows you to have one main `Backbone.Collection` that holds all of your models, and then multiple `Backbone.Subset`s that hold some of the models that are already in your main Collection.
+Hi! I made this for [Tommys Cars](http://tommyscars.com), but decided to put it in its own separate repo after many of my students asked for permission to use it on their own apps. 
+
+This is an extension for Backbone that gives you a new class, Backbone.Subset. It allows you to have one main `Backbone.Collection` that holds all of your models, and then multiple `Backbone.Subset`s that hold some of the models that are already in your main Collection.
 
 ## Purpose
 
