@@ -9,6 +9,7 @@
     }
 
     if (options.comparator) this.comparator = options.comparator;
+    this.url = options.url || options.parentCollection.url;
     this._reset();
     this.initialize.apply(this, arguments);
     if (models) this.add(models, _.extend({silent: true}, options));
