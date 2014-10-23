@@ -26,7 +26,7 @@
     ok(!newModel.collection)
   });
 
-  test('inherits `url`, `model`, and `comparator` from parent if one isnt defined', function () {
+  test("inherits `url`, `model`, and `comparator` from parent if they're not defined", function () {
     col.model = Backbone.Model.extend();
     col.url = '/test';
     col.comparator = 'id';
