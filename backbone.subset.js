@@ -5,18 +5,17 @@
     if (!options.parentCollection instanceof Backbone.Collection) {
       throw 'ArgumentError: Must supply an instanceof Backbone.Collection as parentCollection';
     }
-
     this.parentCollection = options.parentCollection;
 
-    var sub = this;
+    var subset = this;
     _(['model', 'comparator', 'url']).each(function (prop) {
       if (options[prop] !== void 0) {
-        sub[prop] = options[prop];
+        subset[prop] = options[prop];
       } else if (
         !Subset.prototype.hasOwnProperty(prop) &&
-        sub.parentCollection[prop] !== Subset.prototype[prop]
+        subset.parentCollection[prop] !== Subset.prototype[prop]
       ) {
-        sub[prop] = sub.parentCollection[prop];
+        subset[prop] = subset.parentCollection[prop];
       }
     });
 
