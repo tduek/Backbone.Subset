@@ -5,12 +5,12 @@
   module("Backbone.Subset", {
     setup: function () {
       model = new Backbone.Model({id: 1, prop: 'value'});
-      col = new Backbone.Collection;
-      sub = new Backbone.Subset([], {parentCollection: col});
+      col   = new Backbone.Collection;
+      sub   = new Backbone.Subset([], {parentCollection: col});
     }
   });
 
-  test('`add` adds models to parentCollection', 2, function () {
+  test("`add` adds models to parentCollection if it's not there", 2, function () {
     sub.add(model);
 
     equal(col.length, 1);
@@ -26,7 +26,7 @@
     ok(!newModel.collection)
   });
 
-  test("inherits `url`, `model`, and `comparator` from parent if they're not defined", function () {
+  test("inherits `url`, `model`, and `comparator` from parent if they're not defined", 3, function () {
     col.model = Backbone.Model.extend();
     col.url = '/test';
     col.comparator = 'id';
@@ -35,6 +35,13 @@
     equal(col.url, sub.url);
     equal(col.model, sub.model);
     equal(col.comparator, sub.comparator);
+  });
+
+  test("sets new attributes on model in parent on `add`", 1, function () {
+    col.add(model);
+    sub.add({id: 1, prop: 'another value'});
+
+    equal(model.get('prop'), 'another value');
   });
 
 
