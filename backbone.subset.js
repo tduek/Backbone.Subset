@@ -2,17 +2,18 @@
   var Subset = Backbone.Subset = function (models, options) {
     options || (options = {});
 
-    if (!options.parentCollection instanceof Backbone.Collection) {
+    if (options.parentCollection) this.parentCollection = options.parentCollection;
+    if (!(this.parentCollection instanceof Backbone.Collection)) {
       throw 'ArgumentError: Must supply an instanceof Backbone.Collection as parentCollection';
     }
-    this.parentCollection = options.parentCollection;
 
     var subset = this;
     _(['model', 'comparator', 'url']).each(function (prop) {
       if (options[prop] !== void 0) {
         subset[prop] = options[prop];
       } else if (
-        !Subset.prototype.hasOwnProperty(prop) &&
+        subset[prop] === Subset.prototype[prop] &&
+        !subset.constructor.prototype.hasOwnProperty(prop) &&
         subset.parentCollection[prop] !== Subset.prototype[prop]
       ) {
         subset[prop] = subset.parentCollection[prop];
